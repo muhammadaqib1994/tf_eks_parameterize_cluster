@@ -1,0 +1,37 @@
+{
+    "name": "statsd",
+    "image": "newrelic/nri-statsd:2.0.0",
+    "essential": true,
+    "environment": [
+        {
+            "name": "NR_ACCOUNT_ID",
+            "value": "${NR_ACCOUNT_ID}"
+        },
+        {
+            "name": "NR_API_KEY",
+            "value": "NR_API_KEY"
+        }
+    ],
+    "portMappings": [
+        {
+            "containerPort": 8125,
+            "hostPort": 8125
+        }
+    ],
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+            "awslogs-group": "${LOG_GROUP}",
+            "awslogs-region": "${REGION}",
+            "awslogs-stream-prefix": "application"
+        }
+    }
+}
+
+    {   
+	    "name": "ENABLE_ENVOY_DOG_STATSD",
+	    "value": "1"
+    },{
+	    "name": "STATSD_PORT",
+	    "value": "8125"
+    }
