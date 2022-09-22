@@ -36,7 +36,7 @@ pipeline {
 
         string (name: 'VPC_ID', defaultValue: 'vpc-36f4fd53', description: 'VPC ID on which the cluster will be on.')
 
-        string (name: 'INSTANCE_TYPES', defaultValue: '["t2.medium"]', description: 'List of the instance type to create the nodegroup.')
+        string (name: 'INSTANCE_TYPES', defaultValue: '["t2.micro"]', description: 'List of the instance type to create the nodegroup.')
 
         string (name: 'API_SUBNET', defaultValue: '["subnet-76a41c7a", "subnet-0abc2c6f"]', description: 'List of subnet for API server.')
 
