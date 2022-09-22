@@ -26,7 +26,7 @@ pipeline {
         
         choice (name: 'ACTION', choices: ['plan', 'apply', 'destroy'], description: 'Run terraform plan / apply / destroy')
 
-        string (name: 'PROFILE', defaultValue: 'sohail', description: 'Optional, Target AWS Profile')
+        string (name: 'PROFILE', defaultValue: 'Aqib', description: 'Optional, Target AWS Profile')
 
         string (name: 'ENV_NAME', defaultValue: 'tf-AWS', description: 'Env name.')
 
