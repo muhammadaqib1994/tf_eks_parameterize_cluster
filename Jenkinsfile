@@ -9,7 +9,7 @@ def tfCmd(String command, String options = '') {
 pipeline {
     agent any 
     environment {
-        PROJECT_DIR = "eks-update/"
+        PROJECT_DIR = "tf_eks_parameterize_cluster/"
     }
 
 
