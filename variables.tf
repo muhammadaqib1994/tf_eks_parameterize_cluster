@@ -12,7 +12,7 @@ variable "CLUSTER_VERSION" {
 
 variable "INSTANCE_TYPES" {
   type    = list(string)
-  default = ["t2.medium"]
+  default = ["t2.micro"]
 }
 
 variable "VPC_ID" {
@@ -84,6 +84,6 @@ variable "API_PRIVATE_ACCESS" {
 
 variable "AWS_REGION" {
   type    = string
-  default = "us-east-1"
+  default = "us-west-2"
 }
 
