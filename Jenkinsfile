@@ -160,42 +160,7 @@ pipeline {
                         }
                 }
         }
-        stage('Install Components'){
-            when { anyOf
-                {
-                    environment name: 'ACTION', value: 'apply';
-                }
-
-            }
-            steps {
-                dir("${PROJECT_DIR}"){
-                    script {
-                        wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']) {
-                            withCredentials([
-                                [ $class: 'AmazonWebServicesCredentialsBinding',
-                                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-                                    credentialsId: 'AWS_Access',
-                                ]]){
-                                    try {
-                                           
-                                            sh("""
-                                                aws eks --region ${AWS_REGION} update-kubeconfig --name ${CLUSTER_NAME}
-                                                
-                                                kubectl apply -f $WORKSPACE/deployment.yaml
-                                                
-                                            """)
-
-                                            
-                                    } catch (ex) {
-                                        currentBuild.result = "UNSTABLE"
-                                    }
-                                }
-                            }
-                    }
-                }
-            }
-        }
+        
         stage('Terraform Destroy') {
                 when { anyOf 
                             {
