@@ -18,19 +18,19 @@ variable "INSTANCE_TYPES" {
 variable "VPC_ID" {
   type        = string
   description = "VPC ID of the vpc where the cluster will be."
-  default     = "vpc-36f4fd53"
+  default     = "vpc-01d4c978b2a9ae023"
 }
 
 variable "API_SUBNET" {
   type        = list(string)
   description = "List of the subnets for the EKS api server."
-  default     = ["subnet-a0b2d68b", "subnet-098fdc323771fc4b6"]
+  default     = ["subnet-073b537ecd7c2efa7", "subnet-0f2143f26f35ea0b6"]
 }
 
 variable "WORKERS_SUBNETS" {
   type        = list(string)
   description = "List of the subnets for the EKS api server."
-  default     = ["subnet-a0b2d68b", "subnet-098fdc323771fc4b6"]
+  default     = ["subnet-06ea7c1b162480758", "	subnet-0416519b4bda4578f"]
 }
 
 # variable "bucket" {
