@@ -45,8 +45,8 @@ pipeline {
                     env.ACTION = "${params.ACTION}"
                     env.AWS_DEFAULT_REGION = "${params.AWS_REGION}"
                     env.ENV_NAME = "${params.ENV_NAME}"
-                    env.eks_cluster_name = "${params.eks_cluster_name}"
-                    env.eks_cluster_version = "${params.eks_cluster_version}"
+                    env.CLUSTER_NAME = "${params.CLUSTER_NAME}"
+                    env.CLUSTER_VERSION = "${params.CLUSTER_VERSION}"
                     
                 }
             }
@@ -107,9 +107,9 @@ pipeline {
                                                     try {
                                                         sh ("""
                                                         touch $WORKSPACE/terraform.tfvars
-                                                        echo 'eks_cluster_name = "${eks_cluster_name}"' >> $WORKSPACE/terraform.tfvars
+                                                        echo 'CLUSTER_NAME = "${CLUSTER_NAME}"' >> $WORKSPACE/terraform.tfvars
                                                        
-                                                        echo 'eks_cluster_version = "${eks_cluster_version}"' >> $WORKSPACE/terraform.tfvars
+                                                        echo 'CLUSTER_VERSION = "${CLUSTER_VERSION}"' >> $WORKSPACE/terraform.tfvars
                                                         
                                                         cat $WORKSPACE/terraform.tfvars
                                                         """)
@@ -180,7 +180,7 @@ pipeline {
                                     try {
                                            
                                             sh("""
-                                                aws eks --region ${AWS_REGION} update-kubeconfig --name ${eks_cluster_name}
+                                                aws eks --region ${AWS_REGION} update-kubeconfig --name ${CLUSTER_NAME}
                                                 
                                                 kubectl apply -f $WORKSPACE/deployment.yaml
                                                 
