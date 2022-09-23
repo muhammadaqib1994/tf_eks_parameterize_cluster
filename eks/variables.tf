@@ -74,18 +74,13 @@ variable "map_user" {
   default = [
     {
       groups   = ["system:masters"]
-      userarn  = "arn:aws:iam::737971166371:user/xuxant02@gmail.com"
-      username = "xuxant02@gmail.com"
-    },
-    {
-      groups   = ["system:masters"]
       userarn  = "arn:aws:iam::737971166371:user/gitlab-runner"
       username = "gitlab-runner"
     },
     {
       groups   = ["system:masters"]
-      userarn  = "arn:aws:iam::737971166371:user/sohail"
-      username = "sohail"
+      userarn  = "arn:aws:iam::273725063969:user/saghiraws"
+      username = "saghiraws"
     }
   ]
 }
