@@ -30,7 +30,7 @@ pipeline {
 
         string (name: 'ENV_NAME', defaultValue: 'tf-AWS', description: 'Env name.')
 
-        string (name: 'eks_cluster_name', defaultValue: 'EKS_CLUSTER', description: 'Name of EKS cluster.')
+        string (name: 'CLUSTER_NAME', defaultValue: 'EKS_CLUSTER', description: 'Name of EKS cluster.')
 
         choice (name: 'eks_cluster_version', choices: [ '1.20', '1.21', '1.19'], description: 'Kubernetes version in EKS.')
 
