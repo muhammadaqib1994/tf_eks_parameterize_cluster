@@ -6,7 +6,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket =  "sohail-terraform-state"
-    region = "us-east-1"
+    region = "us-west-2"
     key    = "sohail/gitlab-runner/terraform.tfstate"
   }
   required_providers {
