@@ -7,6 +7,7 @@ variable "CLUSTER_NAME" {
 variable "CLUSTER_VERSION" {
   type        = string
   description = "Kubernetes version in EKS."
+  default     = "1.22"
 }
 
 variable "INSTANCE_TYPES" {
