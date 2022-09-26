@@ -161,6 +161,53 @@ pipeline {
                 }
         }
         
+        stage('Install Components'){
+            when { anyOf
+                {
+                    environment name: 'ACTION', value: 'apply';
+                }
+
+            }
+            steps {
+                dir("${PROJECT_DIR}"){
+                    script {
+                        wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']) {
+                            withCredentials([
+                                [ $class: 'AmazonWebServicesCredentialsBinding',
+                                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                                    credentialsId: 'AWS-Access',
+                                ]]){
+                                    try {
+                                            sh("""
+                                            
+                                            mkdir -p ~/.kube
+                                            cp $WORKSPACE/scripts/kubeconfig ~/.kube/config
+                                            """)
+                                            
+                                            sh("""
+                                                aws eks --region us-east-1 update-kubeconfig --name EKS_CLUSTER
+                                                kubectl create ns istio-system
+                                                kubectl apply -f $WORKSPACE/deployment.yaml
+                                            """)
+                                            
+
+                                            sh("""
+                                            kubectl get nodes
+                                            kubectl get pods 
+                                          
+                                            kubectl get svc
+                                            """)
+                                    } catch (ex) {
+                                        currentBuild.result = "UNSTABLE"
+                                    }
+                                }
+                            }
+                    }
+                }
+            }
+        }
+        
         stage('Terraform Destroy') {
                 when { anyOf 
                             {
