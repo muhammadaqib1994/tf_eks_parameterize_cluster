@@ -30,7 +30,7 @@ pipeline {
 
         string (name: 'ENV_NAME', defaultValue: 'tf-AWS', description: 'Env name.')
 
-        string (name: 'APP_NAME', defaultValue: 'EKS_CLUSTER', description: 'Name of EKS cluster.')
+        string (name: 'CLUSTER_NAME', defaultValue: 'EKS_CLUSTER', description: 'Name of EKS cluster.')
 
         choice (name: 'CLUSTER_VERSION', choices: [ '1.20', '1.21', '1.19'], description: 'Kubernetes version in EKS.')
 
@@ -181,7 +181,7 @@ pipeline {
                                     try {
                                             
                                             sh("""
-                                                aws eks --region ${params.AWS_REGION} update-kubeconfig --name ${params.APP_NAME}
+                                                aws eks --region ${params.AWS_REGION} update-kubeconfig --name ${params.CLUSTER_NAME}
                                                
                                                 kubectl apply -f $WORKSPACE/deployment.yaml
                                             """)
