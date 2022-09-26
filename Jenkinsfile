@@ -3,7 +3,7 @@ def tfCmd(String command, String options = '') {
     sh ("cd $WORKSPACE/ && ${ACCESS} && terraform init")
     sh ("echo ${command} ${options}")
     sh ("ls && pwd")
-    sh ("cd $WORKSPACE/eks_cluster/tf_eks_parameterize_cluster/ && ${ACCESS} && terraform init && terraform ${command} ${options} && terraform show -no-color > show-${ENV_NAME}.txt")
+    sh ("cd $WORKSPACE/tf_eks_parameterize_cluster/ && ${ACCESS} && terraform init && terraform ${command} ${options} && terraform show -no-color > show-${ENV_NAME}.txt")
 }
 
 pipeline {
@@ -106,12 +106,12 @@ pipeline {
                                                 {
                                                     try {
                                                         sh ("""
-                                                        touch $WORKSPACE/eks_cluster/tf_eks_parameterize_cluster/terraform.tfvars
-                                                        echo 'CLUSTER_NAME = "${CLUSTER_NAME}"' >> $WORKSPACE/eks_cluster/tf_eks_parameterize_cluster/terraform.tfvars
+                                                        touch $WORKSPACE/tf_eks_parameterize_cluster/terraform.tfvars
+                                                        echo 'CLUSTER_NAME = "${CLUSTER_NAME}"' >> $WORKSPACE/tf_eks_parameterize_cluster/terraform.tfvars
                                                        
-                                                        echo 'CLUSTER_VERSION = "${CLUSTER_VERSION}"' >> $WORKSPACE/eks_cluster/tf_eks_parameterize_cluster/terraform.tfvars
+                                                        echo 'CLUSTER_VERSION = "${CLUSTER_VERSION}"' >> $WORKSPACE/tf_eks_parameterize_cluster/terraform.tfvars
                                                         
-                                                        cat $WORKSPACE/eks_cluster/tf_eks_parameterize_cluster/terraform.tfvars
+                                                        cat $WORKSPACE/tf_eks_parameterize_cluster/terraform.tfvars
                                                         """)
                                                         tfCmd('plan', '-detailed-exitcode -var AWS_REGION=${AWS_DEFAULT_REGION} -var-file=terraform.tfvars -out plan.out')
                                                     } catch (ex) {
@@ -183,7 +183,7 @@ pipeline {
                                             sh("""
                                                 aws eks --region ${params.AWS_REGION} update-kubeconfig --name ${params.CLUSTER_NAME}
                                                
-                                                kubectl apply -f $WORKSPACE/eks_cluster/tf_eks_parameterize_cluster/deployment.yaml
+                                                kubectl apply -f $WORKSPACE/tf_eks_parameterize_cluster/deployment.yaml
                                             """)
                                             
 
