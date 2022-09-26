@@ -1,6 +1,6 @@
 def tfCmd(String command, String options = '') {
     ACCESS = "export AWS_PROFILE=${params.PROFILE} && export TF_ENV_profile=${params.PROFILE}"
-    sh ("cd $WORKSPACE/ && ${ACCESS} && terraform init")
+    sh ("cd $WORKSPACE/tf_eks_parameterize_cluster/ && ${ACCESS} && terraform init")
     sh ("echo ${command} ${options}")
     sh ("ls && pwd")
     sh ("cd $WORKSPACE/tf_eks_parameterize_cluster/ && ${ACCESS} && terraform init && terraform ${command} ${options} && terraform show -no-color > show-${ENV_NAME}.txt")
