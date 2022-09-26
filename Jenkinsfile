@@ -181,7 +181,7 @@ pipeline {
                                     try {
                                             
                                             sh("""
-                                                aws eks --region ${params.AWS_REGION} update-kubeconfig --name ${params.CLUSTER_NAME}
+                                                aws eks --region ${params.AWS_REGION} update-kubeconfig --name ${params.APP_NAME}
                                                
                                                 kubectl apply -f $WORKSPACE/deployment.yaml
                                             """)
