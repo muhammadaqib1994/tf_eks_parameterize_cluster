@@ -3,7 +3,7 @@ def tfCmd(String command, String options = '') {
     sh ("cd $WORKSPACE/ && ${ACCESS} && terraform init")
     sh ("echo ${command} ${options}")
     sh ("ls && pwd")
-    sh ("cd $WORKSPACE/ && ${ACCESS} && terraform init && terraform ${command} ${options} && terraform show -no-color > show-${ENV_NAME}.txt")
+    sh ("cd $WORKSPACE/eks_cluster/tf_eks_parameterize_cluster/ && ${ACCESS} && terraform init && terraform ${command} ${options} && terraform show -no-color > show-${ENV_NAME}.txt")
 }
 
 pipeline {
@@ -106,12 +106,12 @@ pipeline {
                                                 {
                                                     try {
                                                         sh ("""
-                                                        touch $WORKSPACE/terraform.tfvars
-                                                        echo 'CLUSTER_NAME = "${CLUSTER_NAME}"' >> $WORKSPACE/terraform.tfvars
+                                                        touch $WORKSPACE/eks_cluster/tf_eks_parameterize_cluster/terraform.tfvars
+                                                        echo 'CLUSTER_NAME = "${CLUSTER_NAME}"' >> $WORKSPACE/eks_cluster/tf_eks_parameterize_cluster/terraform.tfvars
                                                        
-                                                        echo 'CLUSTER_VERSION = "${CLUSTER_VERSION}"' >> $WORKSPACE/terraform.tfvars
+                                                        echo 'CLUSTER_VERSION = "${CLUSTER_VERSION}"' >> $WORKSPACE/eks_cluster/tf_eks_parameterize_cluster/terraform.tfvars
                                                         
-                                                        cat $WORKSPACE/terraform.tfvars
+                                                        cat $WORKSPACE/eks_cluster/tf_eks_parameterize_cluster/terraform.tfvars
                                                         """)
                                                         tfCmd('plan', '-detailed-exitcode -var AWS_REGION=${AWS_DEFAULT_REGION} -var-file=terraform.tfvars -out plan.out')
                                                     } catch (ex) {
@@ -179,16 +179,11 @@ pipeline {
                                     credentialsId: 'AWS-Access',
                                 ]]){
                                     try {
-                                            sh("""
-                                            
-                                            mkdir -p ~/.kube
-                                            cp $WORKSPACE/scripts/kubeconfig ~/.kube/config
-                                            """)
                                             
                                             sh("""
-                                                aws eks --region us-east-1 update-kubeconfig --name EKS_CLUSTER
-                                                kubectl create ns istio-system
-                                                kubectl apply -f $WORKSPACE/deployment.yaml
+                                                aws eks --region ${params.AWS_REGION} update-kubeconfig --name ${params.CLUSTER_NAME}
+                                               
+                                                kubectl apply -f $WORKSPACE/eks_cluster/tf_eks_parameterize_cluster/deployment.yaml
                                             """)
                                             
 
