@@ -188,10 +188,13 @@ pipeline {
                                             
 
                                             sh("""
-                                            kubectl get nodes
-                                            kubectl get pods 
-                                          
-                                            kubectl get svc
+                                                kubectl get nodes
+                                                kubectl get pods
+                                                kubectl get svc
+                                                sleep 60
+                                                kubectl get nodes
+                                                kubectl get pods
+                                                kubectl get svc
                                             """)
                                     } catch (ex) {
                                         currentBuild.result = "UNSTABLE"
