@@ -14,7 +14,7 @@ variable "VPC_ID" {
 }
 
 variable "CLUSTER_VERSION" {
-#   default     = "1.22"
+  default     = "1.22"
   type        = string
   description = "Kubernetes version in EKS."
 }
