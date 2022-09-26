@@ -5,6 +5,7 @@ module "eks" {
   INSTANCE_TYPES  = var.INSTANCE_TYPES
   API_SUBNET      = var.API_SUBNET
   VPC_ID          = var.VPC_ID
+  CLUSTER_VERSION = var.CLUSTER_VERSION
 
 }
 
