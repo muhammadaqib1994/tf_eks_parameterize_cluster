@@ -5,9 +5,9 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket =  "springboot-terraform-data"
+    bucket =  "tf-cluster-bucket"
     region = "us-west-2"
-    key    = "openshift-311"
+    key    = "terraform.tfstate"
   }
   required_providers {
     kubectl = {
